@@ -1,0 +1,197 @@
+---
+// Star Wars Intro Component
+---
+
+<div id="starwars-intro" class="starwars-bg">
+  <!-- Click to start overlay -->
+  <div id="start-overlay" class="start-overlay">
+    <div class="start-icon">▶️</div>
+    <div class="start-text">Getraueder eu?</div>
+  </div>
+
+  <!-- Blue intro text -->
+  <div id="intro-text" class="intro-text">
+    Vor langer Ziit irgendwo in Züri...
+  </div>
+
+  <!-- Logo -->
+  <div id="logo-container" class="logo-container">
+    <img src="/images/start-wars-intro.png" alt="Döme & Flips" />
+  </div>
+
+  <!-- Text crawl -->
+  <div id="crawl-container" class="crawl-container">
+    <div id="crawl" class="crawl">
+      <div class="crawl-title">Episode 30 (yiikes)</div>
+      <div class="crawl-title" style="font-size: 0.7em; margin-bottom: 2em;">DIE MIDLIFE CRISIS</div>
+      <div class="crawl-text">
+        <p>
+          Es herscht Unrueh in 8049. Di beide Brüedere Döme und Flips hend di kritischi Schwelle vom 30igste Lebensjahr überschritte und es isch schlimmer als ahgno!
+        </p>
+        <p>
+          D'Hairlines schwiindet und d'Büüchlis sind am choo. D'Ads uf Insta zeiged vermehrt Bluechew, ergonomischi Kopfchüüsi und ab&zue au mal en Griisbrei. Au sind scho ersti Ussage gfalle zum für immer ufhöre z'trinke (Döme, fühl dich hässig ahgluegt, amk!)
+        </p>
+        <p>
+          D'Rebelle-Allianz vo ihrere Jugend staht endgültig vorem Zemmebruuch.
+        </p>
+        <p>
+          Doch d'Hoffnig stirbt z'letzt. En letzte Versuech zur ewige Jugend wird ihgleitet und evt werdemers ja lustig ha!
+        </p>
+        <p class="meta">
+          (Sorry btw für de Star Wars touch haha kp ob ihr de shizzle überhaupts gern hend hahahah)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skip button -->
+  <button id="skip-btn" class="skip-btn" style="display: none;">
+    Skip Intro →
+  </button>
+
+  <!-- Audio element -->
+  <audio id="starwars-audio" preload="auto">
+    <source src="/audio/Star_Wars_Main_Theme_Song.mp3" type="audio/mpeg" />
+  </audio>
+</div>
+
+<style>
+  @import '../styles/starwars.css';
+</style>
+
+<script>
+  // Star Wars Intro Controller
+  class StarWarsIntro {
+    private overlay: HTMLElement;
+    private introText: HTMLElement;
+    private logoContainer: HTMLElement;
+    private crawlContainer: HTMLElement;
+    private crawl: HTMLElement;
+    private skipBtn: HTMLElement;
+    private audio: HTMLAudioElement;
+    private introContainer: HTMLElement;
+
+    constructor() {
+      this.overlay = document.getElementById('start-overlay')!;
+      this.introText = document.getElementById('intro-text')!;
+      this.logoContainer = document.getElementById('logo-container')!;
+      this.crawlContainer = document.getElementById('crawl-container')!;
+      this.crawl = document.getElementById('crawl')!;
+      this.skipBtn = document.getElementById('skip-btn')!;
+      this.audio = document.getElementById('starwars-audio') as HTMLAudioElement;
+      this.introContainer = document.getElementById('starwars-intro')!;
+
+      this.init();
+    }
+
+    init() {
+      // Click to start
+      this.overlay.addEventListener('click', () => this.start());
+      
+      // Skip button
+      this.skipBtn.addEventListener('click', () => this.skip());
+
+      // Also allow spacebar to start
+      document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && this.overlay.style.display !== 'none') {
+          e.preventDefault();
+          this.start();
+        }
+      });
+    }
+
+    async start() {
+      // Hide overlay
+      this.overlay.style.display = 'none';
+      
+      // Show skip button
+      this.skipBtn.style.display = 'block';
+
+      // Start the sequence
+      await this.showIntroText();
+      await this.playAudioAndShowLogo();
+      await this.showCrawl();
+      this.endIntro();
+    }
+
+    showIntroText(): Promise<void> {
+      return new Promise((resolve) => {
+        this.introText.classList.add('visible');
+        // Wait for fade in/out animation (5 seconds)
+        setTimeout(resolve, 5000);
+      });
+    }
+
+    playAudioAndShowLogo(): Promise<void> {
+      return new Promise((resolve) => {
+        // Start audio
+        this.audio.volume = 0.7;
+        this.audio.play().catch(console.error);
+
+        // Show logo with zoom animation
+        this.logoContainer.classList.add('visible');
+        
+        // Wait for logo animation (10 seconds)
+        setTimeout(resolve, 10000);
+      });
+    }
+
+    showCrawl(): Promise<void> {
+      return new Promise((resolve) => {
+        this.crawlContainer.classList.add('visible');
+        this.crawl.classList.add('animate');
+        
+        // Wait for crawl animation (80 seconds, but we'll end after ~60 for pacing)
+        setTimeout(resolve, 60000);
+      });
+    }
+
+    endIntro() {
+      // Fade out audio
+      this.fadeOutAudio();
+      
+      // Fade out intro
+      this.introContainer.classList.add('fade-out');
+      
+      // Dispatch event for parent to show password page
+      setTimeout(() => {
+        document.dispatchEvent(new CustomEvent('intro-complete'));
+        this.introContainer.style.display = 'none';
+      }, 2000);
+    }
+
+    skip() {
+      // Stop any animations
+      this.introText.classList.remove('visible');
+      this.logoContainer.classList.remove('visible');
+      this.crawl.classList.remove('animate');
+      
+      // Quick fade out audio
+      this.audio.pause();
+      
+      // End immediately
+      this.introContainer.classList.add('fade-out');
+      
+      setTimeout(() => {
+        document.dispatchEvent(new CustomEvent('intro-complete'));
+        this.introContainer.style.display = 'none';
+      }, 500);
+    }
+
+    fadeOutAudio() {
+      const fadeInterval = setInterval(() => {
+        if (this.audio.volume > 0.1) {
+          this.audio.volume -= 0.1;
+        } else {
+          this.audio.pause();
+          clearInterval(fadeInterval);
+        }
+      }, 200);
+    }
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    new StarWarsIntro();
+  });
+</script>

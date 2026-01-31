@@ -1,0 +1,654 @@
+---
+// Landing page with trip selection doors
+---
+
+<html lang="de-CH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="description" content="D'Geburtstagssite für Döme & Flips - 30 Jahre alt!" />
+    <title>🎁 Euer Geschänk - Döme & Flips</title>
+  </head>
+  <body>
+    <!-- VOICE-OVER OVERLAY -->
+    <div id="voice-overlay" class="voice-overlay">
+      <div class="overlay-background"></div>
+      <div class="video-container">
+        <video id="overlay-video" class="overlay-video" autoplay loop muted playsinline>
+          <source src="/video/weihnachtsmah-video.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <audio id="overlay-audio" autoplay>
+        <source src="/audio/wiehnachtsmah-erklearung.mp3" type="audio/mpeg" />
+      </audio>
+      <button id="skip-voice-btn" class="skip-voice-btn">
+        Skip ⏭️
+      </button>
+    </div>
+
+    <!-- LANDING PAGE CONTENT -->
+    <div class="landing-page">
+      <!-- Header Section -->
+      <header class="header-section">
+        <!-- Curved Birthday Title -->
+        <svg viewBox="0 0 500 100" class="curved-text-svg">
+          <defs>
+            <path id="curve" d="M 50,80 Q 250,0 450,80" fill="transparent" />
+          </defs>
+          <text class="curved-text">
+            <textPath href="#curve" startOffset="50%" text-anchor="middle">
+              HAPPY 30th BIRTHDAY
+            </textPath>
+          </text>
+        </svg>
+        
+        <h1 class="names-title">
+          <span class="heart">💖</span>
+          DÖME & FLIPS
+          <span class="heart">💖</span>
+        </h1>
+        
+        <div class="hearts-row">💕 💗 💖 💗 💕</div>
+        
+        <h2 class="subtitle-reveal">
+          Finded use was eu chönnt erwarte<span class="eyes">👀</span>
+        </h2>
+      </header>
+
+      <!-- Doors Section -->
+      <section class="doors-section">
+        <div class="doors-container">
+          <!-- Door 1 -->
+          <div class="door-wrapper">
+            <div class="door" data-door="1">
+              <div class="door-frame">
+                <div class="door-surface">
+                  <div class="door-panels">
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                  </div>
+                  <div class="chains">
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                  </div>
+                  <div class="lock">🔒</div>
+                  <div class="door-label">???</div>
+                </div>
+              </div>
+            </div>
+            <p class="door-number">Option 1</p>
+          </div>
+
+          <!-- Door 2 -->
+          <div class="door-wrapper">
+            <div class="door" data-door="2">
+              <div class="door-frame">
+                <div class="door-surface">
+                  <div class="door-panels">
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                  </div>
+                  <div class="chains">
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                  </div>
+                  <div class="lock">🔒</div>
+                  <div class="door-label">???</div>
+                </div>
+              </div>
+            </div>
+            <p class="door-number">Option 2</p>
+          </div>
+
+          <!-- Door 3 -->
+          <div class="door-wrapper">
+            <div class="door" data-door="3">
+              <div class="door-frame">
+                <div class="door-surface">
+                  <div class="door-panels">
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                  </div>
+                  <div class="chains">
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                  </div>
+                  <div class="lock">🔒</div>
+                  <div class="door-label">???</div>
+                </div>
+              </div>
+            </div>
+            <p class="door-number">Option 3</p>
+          </div>
+
+          <!-- Door 4 -->
+          <div class="door-wrapper">
+            <div class="door" data-door="4">
+              <div class="door-frame">
+                <div class="door-surface">
+                  <div class="door-panels">
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                  </div>
+                  <div class="chains">
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                  </div>
+                  <div class="lock">🔒</div>
+                  <div class="door-label">???</div>
+                </div>
+              </div>
+            </div>
+            <p class="door-number">Option 4</p>
+          </div>
+
+          <!-- Door 5 -->
+          <div class="door-wrapper">
+            <div class="door" data-door="5">
+              <div class="door-frame">
+                <div class="door-surface">
+                  <div class="door-panels">
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                  </div>
+                  <div class="chains">
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                    <span class="chain-link">⛓️</span>
+                  </div>
+                  <div class="lock">🔒</div>
+                  <div class="door-label">???</div>
+                </div>
+              </div>
+            </div>
+            <p class="door-number">Option 5</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hint text -->
+      <p class="hint-text">🔑 Öffnet d'Tüüre, sind eu aber de Gfahr bewusst!</p>
+    </div>
+  </body>
+</html>
+
+<style>
+  /* Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+
+  /* ============================================
+     VOICE-OVER OVERLAY
+     ============================================ */
+  .voice-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1s ease-out;
+  }
+
+  .voice-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .overlay-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .video-container {
+    position: relative;
+    z-index: 1;
+    max-width: 80%;
+    max-height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay-video {
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+  }
+
+  .skip-voice-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    z-index: 1001;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+
+  .skip-voice-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+    transform: scale(1.05);
+  }
+
+  /* ============================================
+     LANDING PAGE STYLES
+     ============================================ */
+  .landing-page {
+    min-height: 100vh;
+    background: linear-gradient(
+      135deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #f5576c 75%,
+      #4facfe 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    padding: 30px 20px 60px;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Header Section */
+  .header-section {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .curved-text-svg {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    overflow: visible;
+  }
+
+  .curved-text {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 42px;
+    font-weight: bold;
+    animation: rainbowFill 3s linear infinite;
+    filter: drop-shadow(2px 2px 0 #000);
+  }
+
+  @keyframes rainbowFill {
+    0%, 100% { fill: #ff0000; }
+    14% { fill: #ff7f00; }
+    28% { fill: #ffff00; }
+    42% { fill: #00ff00; }
+    57% { fill: #0000ff; }
+    71% { fill: #4b0082; }
+    85% { fill: #9400d3; }
+  }
+
+  .names-title {
+    font-size: clamp(2rem, 8vw, 4rem);
+    color: white;
+    text-shadow: 
+      3px 3px 0 #ff00ff,
+      -2px -2px 0 #00ffff,
+      4px 4px 10px rgba(0,0,0,0.5);
+    margin-top: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .heart {
+    display: inline-block;
+    animation: heartBeat 1s ease-in-out infinite;
+  }
+
+  .heart:last-child {
+    animation-delay: 0.5s;
+  }
+
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  .hearts-row {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .subtitle-reveal {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    color: white;
+    margin-top: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-weight: normal;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+
+  .eyes {
+    display: inline-block;
+    animation: peek 2s ease-in-out infinite;
+    margin-left: 5px;
+  }
+
+  @keyframes peek {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  /* Doors Section */
+  .doors-section {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .doors-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .door-wrapper {
+    text-align: center;
+  }
+
+  .door {
+    width: 180px;
+    height: 280px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    perspective: 1000px;
+  }
+
+  .door:hover {
+    transform: scale(1.05);
+  }
+
+  .door:hover .lock {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .door-frame {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 50%, #2a2a2a 100%);
+    border: 8px solid #4a4a4a;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 
+      inset 0 0 20px rgba(0,0,0,0.5),
+      0 10px 30px rgba(0,0,0,0.5),
+      0 0 0 4px #2a2a2a;
+    padding: 8px;
+  }
+
+  .door-surface {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      #8B4513 0%,
+      #A0522D 20%,
+      #8B4513 40%,
+      #6B3510 60%,
+      #8B4513 80%,
+      #A0522D 100%
+    );
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Door panels (decorative) */
+  .door-panels {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .panel {
+    background: linear-gradient(
+      135deg,
+      #6B3510 0%,
+      #8B4513 50%,
+      #5a2d0a 100%
+    );
+    border: 3px solid #4a2508;
+    border-radius: 3px;
+    box-shadow: 
+      inset 2px 2px 5px rgba(255,255,255,0.1),
+      inset -2px -2px 5px rgba(0,0,0,0.3);
+  }
+
+  /* Chains */
+  .chains {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .chain-link {
+    font-size: 2rem;
+    filter: grayscale(50%) brightness(1.2);
+    margin: -8px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+
+  /* Lock */
+  .lock {
+    position: absolute;
+    bottom: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    z-index: 3;
+    filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.5));
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(-50%) rotate(0); }
+    25% { transform: translateX(-50%) rotate(-10deg); }
+    75% { transform: translateX(-50%) rotate(10deg); }
+  }
+
+  /* Door label */
+  .door-label {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    font-family: 'Impact', sans-serif;
+    letter-spacing: 2px;
+  }
+
+  .door-number {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+  }
+
+  /* Hint text */
+  .hint-text {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1.2rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .door {
+      width: 140px;
+      height: 220px;
+    }
+
+    .doors-container {
+      gap: 20px;
+    }
+
+    .chain-link {
+      font-size: 1.5rem;
+    }
+
+    .lock {
+      font-size: 2.5rem;
+    }
+
+    .door-label {
+      font-size: 1.2rem;
+    }
+
+    .video-container {
+      max-width: 95%;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .door {
+      width: 120px;
+      height: 190px;
+    }
+
+    .door-panels {
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 50px;
+      gap: 6px;
+    }
+  }
+</style>
+
+<script>
+  // Elements
+  const voiceOverlay = document.getElementById('voice-overlay') as HTMLElement;
+  const overlayVideo = document.getElementById('overlay-video') as HTMLVideoElement;
+  const overlayAudio = document.getElementById('overlay-audio') as HTMLAudioElement;
+  const skipVoiceBtn = document.getElementById('skip-voice-btn') as HTMLButtonElement;
+
+  // Start video and audio on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    // Ensure video plays
+    overlayVideo.play().catch(console.error);
+    
+    // Audio might need user interaction in some browsers
+    overlayAudio.play().catch((err) => {
+      console.log('Audio autoplay blocked, waiting for user interaction');
+      // If autoplay is blocked, try to play on any click
+      document.addEventListener('click', () => {
+        overlayAudio.play().catch(console.error);
+      }, { once: true });
+    });
+  });
+
+  // When audio ends, hide overlay
+  overlayAudio.addEventListener('ended', () => {
+    hideOverlay();
+  });
+
+  // Skip button
+  skipVoiceBtn.addEventListener('click', () => {
+    hideOverlay();
+  });
+
+  function hideOverlay() {
+    // Stop audio and video
+    overlayAudio.pause();
+    overlayVideo.pause();
+    
+    // Fade out overlay
+    voiceOverlay.classList.add('fade-out');
+    
+    // Remove from DOM after animation
+    setTimeout(() => {
+      voiceOverlay.style.display = 'none';
+    }, 1000);
+  }
+
+  // Door click handlers
+  document.querySelectorAll('.door').forEach((door) => {
+    door.addEventListener('click', () => {
+      const doorNumber = door.getAttribute('data-door');
+      alert(`🔒 Option ${doorNumber} isch no gschlosse!\n\nDu muesch zerst e Challenge bestah...`);
+    });
+  });
+
+  // Disable right-click
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    alert('🚫 NICE TRY!\n\nDu chasch nöd eifach d\'Source Code klaue! 😏');
+  });
+</script>

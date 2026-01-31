@@ -1,0 +1,32 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="de-CH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="description" content="D'Geburtstagssite für Döme & Flips - 30 Jahre alt!" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+    
+    <!-- Best viewed in Netscape badge -->
+    <div class="netscape-badge">
+      ⭐ Best viewed in Netscape Navigator 4.0 ⭐<br/>
+      <small>© 1996-2026 All rights reserved</small>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/geocities.css';
+</style>

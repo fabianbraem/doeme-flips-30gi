@@ -1,0 +1,249 @@
+/* 90s GEOCITIES CHAOS CSS */
+
+/* Import Comic Sans (or fallback) */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+/* CSS Variables for easy theming */
+:root {
+  --comic-sans: 'Comic Neue', 'Comic Sans MS', cursive;
+  --neon-green: #00ff00;
+  --neon-pink: #ff00ff;
+  --neon-yellow: #ffff00;
+  --neon-cyan: #00ffff;
+  --hot-pink: #ff1493;
+  --electric-blue: #0000ff;
+  --warning-red: #ff0000;
+}
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Body with tiled starfield background */
+body {
+  font-family: var(--comic-sans);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #000033;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+    radial-gradient(rgba(255,255,255,.1), rgba(255,255,255,.1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  color: var(--neon-green);
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='8' fill='%23ff00ff'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%2300ffff'/%3E%3C/svg%3E"), auto;
+}
+
+/* Rainbow text animation */
+@keyframes rainbow {
+  0% { color: #ff0000; }
+  14% { color: #ff7f00; }
+  28% { color: #ffff00; }
+  42% { color: #00ff00; }
+  57% { color: #0000ff; }
+  71% { color: #4b0082; }
+  85% { color: #9400d3; }
+  100% { color: #ff0000; }
+}
+
+.rainbow-text {
+  animation: rainbow 3s linear infinite;
+  font-weight: bold;
+}
+
+/* Blinking text - the classic */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Glowing text */
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green), 0 0 20px var(--neon-green); }
+  50% { text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink); }
+}
+
+.glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Marquee container styling */
+.marquee-container {
+  background: linear-gradient(90deg, var(--hot-pink), var(--neon-cyan), var(--neon-yellow), var(--hot-pink));
+  padding: 5px 0;
+  overflow: hidden;
+}
+
+.marquee-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* Retro button */
+.retro-btn {
+  font-family: var(--comic-sans);
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  background: linear-gradient(180deg, #ffff00 0%, #ff8800 50%, #ff4400 100%);
+  border: 4px outset #ffcc00;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 #000;
+  transition: all 0.1s;
+}
+
+.retro-btn:hover {
+  background: linear-gradient(180deg, #00ffff 0%, #00aaff 50%, #0066ff 100%);
+  border-color: #00ccff;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.retro-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+  border-style: inset;
+}
+
+/* Retro input */
+.retro-input {
+  font-family: var(--comic-sans);
+  font-size: 1.2rem;
+  padding: 12px 20px;
+  border: 4px inset #888;
+  background: #fff;
+  color: #000;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.retro-input:focus {
+  outline: none;
+  border-color: var(--hot-pink);
+  box-shadow: 0 0 10px var(--hot-pink);
+}
+
+/* Container with 90s border */
+.retro-box {
+  background: linear-gradient(135deg, #1a1a4e 0%, #2d1b4e 100%);
+  border: 4px ridge #8888ff;
+  padding: 20px;
+  box-shadow: 
+    inset 0 0 20px rgba(0, 255, 255, 0.1),
+    0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+/* Visitor counter style */
+.visitor-counter {
+  font-family: 'Courier New', monospace;
+  background: #000;
+  border: 3px inset #444;
+  padding: 5px 15px;
+  color: var(--neon-green);
+  display: inline-block;
+  letter-spacing: 2px;
+}
+
+/* Under construction GIF placeholder styling */
+.under-construction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ffcc00,
+    #ffcc00 10px,
+    #000 10px,
+    #000 20px
+  );
+}
+
+/* Shake animation for wrong password */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Horizontal rule - 90s style */
+hr.retro {
+  border: none;
+  height: 10px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--neon-pink), 
+    var(--neon-cyan), 
+    var(--neon-yellow), 
+    var(--neon-green),
+    var(--neon-cyan),
+    var(--neon-pink),
+    transparent
+  );
+  margin: 20px 0;
+}
+
+/* Center content helper */
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Spinning element */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 3s linear infinite;
+  display: inline-block;
+}
+
+/* Floating/bouncing animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.float {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* Netscape badge styling */
+.netscape-badge {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  padding: 10px;
+  border-top: 2px groove #444;
+  margin-top: 20px;
+}
+
+/* Error message */
+.error-msg {
+  color: var(--warning-red);
+  font-weight: bold;
+  text-shadow: 0 0 10px var(--warning-red);
+  margin-top: 10px;
+}

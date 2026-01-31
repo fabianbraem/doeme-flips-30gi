@@ -1,0 +1,483 @@
+---
+import StarWarsIntro from '../components/StarWarsIntro.astro';
+---
+
+<html lang="de-CH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="description" content="D'Geburtstagssite für Döme & Flips - 30 Jahre alt!" />
+    <title>🎂 HAPPY 30th BIRTHDAY - Döme & Flips</title>
+  </head>
+  <body>
+    <!-- Star Wars Intro -->
+    <StarWarsIntro />
+
+    <!-- PASSWORD PAGE -->
+    <div id="password-page" class="password-page" style="display: none;">
+      
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Curved Birthday Title -->
+        <div class="birthday-header">
+          <svg viewBox="0 0 500 100" class="curved-text-svg">
+            <defs>
+              <path id="curve" d="M 50,80 Q 250,0 450,80" fill="transparent" />
+            </defs>
+            <text class="curved-text">
+              <textPath href="#curve" startOffset="50%" text-anchor="middle">
+                HAPPY 30th BIRTHDAY
+              </textPath>
+            </text>
+          </svg>
+          
+          <h1 class="names-title">
+            <span class="heart">💖</span>
+            DÖME & FLIPS
+            <span class="heart">💖</span>
+          </h1>
+          <div class="hearts-row">💕 💗 💖 💗 💕</div>
+        </div>
+
+        <!-- Welcome Image -->
+        <div class="welcome-image-container">
+          <img src="/images/welcome-image.png" alt="Welcome!" class="welcome-image" />
+        </div>
+      </div>
+
+      <!-- Windows 95 Password Window -->
+      <div id="win95-window" class="win95-window">
+        <div class="win95-titlebar" id="win95-titlebar">
+          <span class="win95-title">🔐 Password.exe</span>
+          <div class="win95-buttons">
+            <button class="win95-btn win95-minimize">_</button>
+            <button class="win95-btn win95-maximize">□</button>
+            <button class="win95-btn win95-close">×</button>
+          </div>
+        </div>
+        <div class="win95-content">
+          <div class="win95-icon">🔑</div>
+          <p class="win95-label">Gib s'Passwort ii:</p>
+          <form id="password-form">
+            <input 
+              type="password" 
+              id="password" 
+              class="win95-input" 
+              placeholder=""
+              autocomplete="off"
+            />
+            <div class="win95-form-buttons">
+              <button type="submit" class="win95-form-btn">OK</button>
+              <button type="button" class="win95-form-btn" onclick="document.getElementById('password').value=''">Cancel</button>
+            </div>
+          </form>
+          <p id="error-message" class="win95-error" style="display: none;">
+            ❌ Falsches Passwort!
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  /* Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Password Page with gradient */
+  .password-page {
+    min-height: 100vh;
+    background: linear-gradient(
+      135deg,
+      #667eea 0%,
+      #764ba2 25%,
+      #f093fb 50%,
+      #f5576c 75%,
+      #4facfe 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+    position: relative;
+  }
+
+  .password-page.visible {
+    opacity: 1;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Main Content */
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    padding-bottom: 200px;
+  }
+
+  /* Birthday Header */
+  .birthday-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .curved-text-svg {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    overflow: visible;
+  }
+
+  .curved-text {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 42px;
+    font-weight: bold;
+    animation: rainbowFill 3s linear infinite;
+    filter: drop-shadow(2px 2px 0 #000);
+  }
+
+  @keyframes rainbowFill {
+    0%, 100% { fill: #ff0000; }
+    14% { fill: #ff7f00; }
+    28% { fill: #ffff00; }
+    42% { fill: #00ff00; }
+    57% { fill: #0000ff; }
+    71% { fill: #4b0082; }
+    85% { fill: #9400d3; }
+  }
+
+  .names-title {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: clamp(2rem, 8vw, 4rem);
+    color: white;
+    text-shadow: 
+      3px 3px 0 #ff00ff,
+      -2px -2px 0 #00ffff,
+      4px 4px 10px rgba(0,0,0,0.5);
+    margin-top: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .heart {
+    display: inline-block;
+    animation: heartBeat 1s ease-in-out infinite;
+  }
+
+  .heart:last-child {
+    animation-delay: 0.5s;
+  }
+
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  .hearts-row {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Welcome Image */
+  .welcome-image-container {
+    margin: 20px 0;
+  }
+
+  .welcome-image {
+    max-width: 90vw;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+
+  /* Windows 95 Window */
+  .win95-window {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: 
+      inset 1px 1px 0 #dfdfdf,
+      inset -1px -1px 0 #0a0a0a,
+      4px 4px 10px rgba(0,0,0,0.3);
+    font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif;
+    cursor: default;
+    z-index: 100;
+  }
+
+  .win95-titlebar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    padding: 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+  }
+
+  .win95-title {
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+  }
+
+  .win95-buttons {
+    display: flex;
+    gap: 2px;
+  }
+
+  .win95-btn {
+    width: 16px;
+    height: 14px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    font-size: 10px;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .win95-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+  }
+
+  .win95-content {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .win95-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+
+  .win95-label {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #000;
+  }
+
+  .win95-input {
+    width: 100%;
+    padding: 5px;
+    font-size: 14px;
+    border: 2px solid;
+    border-color: #808080 #ffffff #ffffff #808080;
+    background: #fff;
+    font-family: inherit;
+    margin-bottom: 15px;
+  }
+
+  .win95-input:focus {
+    outline: none;
+  }
+
+  .win95-form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .win95-form-btn {
+    padding: 5px 20px;
+    font-size: 12px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: 75px;
+  }
+
+  .win95-form-btn:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+  }
+
+  .win95-form-btn:first-child {
+    border: 3px solid;
+    border-color: #000 #000 #000 #000;
+    outline: 1px solid #000;
+    outline-offset: -4px;
+  }
+
+  .win95-error {
+    color: #ff0000;
+    font-size: 12px;
+    margin-top: 10px;
+    padding: 5px;
+    background: #ffcccc;
+    border: 1px solid #ff0000;
+  }
+
+  /* Responsive */
+  @media (max-width: 400px) {
+    .win95-window {
+      width: 90vw;
+      left: 5vw;
+      transform: none;
+    }
+  }
+
+  /* Shake animation */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+</style>
+
+<script>
+  // Show password page when intro completes
+  document.addEventListener('intro-complete', () => {
+    const passwordPage = document.getElementById('password-page');
+    if (passwordPage) {
+      passwordPage.style.display = 'block';
+      passwordPage.offsetHeight; // Trigger reflow
+      passwordPage.classList.add('visible');
+      
+      setTimeout(() => {
+        const passwordInput = document.getElementById('password') as HTMLInputElement;
+        if (passwordInput) passwordInput.focus();
+      }, 500);
+    }
+  });
+
+  // Password form handling
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('password-form') as HTMLFormElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    const errorMessage = document.getElementById('error-message') as HTMLElement;
+    const win95Window = document.getElementById('win95-window') as HTMLElement;
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const password = passwordInput.value.toLowerCase().trim();
+        
+        if (password === 'password') {
+          // Success! Redirect to landing page
+          window.location.href = '/landing';
+        } else {
+          // Wrong password - show error and shake
+          errorMessage.style.display = 'block';
+          win95Window.style.animation = 'shake 0.5s ease-in-out';
+          passwordInput.value = '';
+          passwordInput.focus();
+          
+          setTimeout(() => {
+            win95Window.style.animation = '';
+          }, 500);
+
+          // Easter eggs
+          if (password === 'döme' || password === 'dome' || password === 'flips') {
+            errorMessage.textContent = '❌ Haha nice try!';
+          } else if (password === '1234' || password === '0000') {
+            errorMessage.textContent = '❌ Ernsthaft?!';
+          } else if (password === 'admin') {
+            errorMessage.textContent = '❌ Du Hacker!';
+          } else if (password === 'starwars' || password === 'star wars') {
+            errorMessage.textContent = '❌ Wrong franchise!';
+          } else {
+            errorMessage.textContent = '❌ Falsches Passwort!';
+          }
+        }
+      });
+    }
+
+    // Draggable window
+    const titlebar = document.getElementById('win95-titlebar');
+    if (titlebar && win95Window) {
+      let isDragging = false;
+      let initialX: number;
+      let initialY: number;
+
+      titlebar.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        const rect = win95Window.getBoundingClientRect();
+        initialX = e.clientX - rect.left;
+        initialY = e.clientY - rect.top;
+        win95Window.style.transform = 'none';
+        win95Window.style.left = rect.left + 'px';
+        win95Window.style.top = rect.top + 'px';
+        win95Window.style.bottom = 'auto';
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          e.preventDefault();
+          let currentX = e.clientX - initialX;
+          let currentY = e.clientY - initialY;
+          const maxX = window.innerWidth - win95Window.offsetWidth;
+          const maxY = window.innerHeight - win95Window.offsetHeight;
+          currentX = Math.max(0, Math.min(currentX, maxX));
+          currentY = Math.max(0, Math.min(currentY, maxY));
+          win95Window.style.left = currentX + 'px';
+          win95Window.style.top = currentY + 'px';
+        }
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+      // Close button joke
+      const closeBtn = win95Window.querySelector('.win95-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          win95Window.style.animation = 'shake 0.3s ease-in-out';
+          setTimeout(() => {
+            win95Window.style.animation = '';
+            alert('🚫 Nice try! Du chasch das Fenster nöd schliesse! 😈');
+          }, 300);
+        });
+      }
+    }
+  });
+
+  // Development: Skip intro
+  const skipIntroForDev = false;
+  if (skipIntroForDev) {
+    document.addEventListener('DOMContentLoaded', () => {
+      const intro = document.getElementById('starwars-intro');
+      const passwordPage = document.getElementById('password-page');
+      if (intro) intro.style.display = 'none';
+      if (passwordPage) {
+        passwordPage.style.display = 'block';
+        passwordPage.classList.add('visible');
+      }
+    });
+  }
+</script>
