@@ -1,0 +1,511 @@
+---
+// Challenge 3: Popup Spam Challenge
+---
+
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>🚪 Challenge 3: Tüür öffne!</title>
+  </head>
+  <body>
+    <div class="challenge-page">
+      <a href="/landing" class="back-btn">← Zurück</a>
+      
+      <button class="main-btn" id="main-btn">🚪 Tüür öffne!</button>
+
+      <!-- Already completed message -->
+      <div id="completed-msg" class="completed-msg" style="display: none;">
+        <h2>✅ Bereits geschafft!</h2>
+        <p>Du hast diese Challenge schon bestanden.</p>
+      </div>
+
+      <!-- Success Modal -->
+      <div id="success-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <h2>🎉 GESCHAFFT!</h2>
+          <p>sheesh was en Ad master daamn!</p>
+          <p class="modal-subtitle">Die Tür öffnet sich...</p>
+          <button id="continue-btn" class="action-btn">🚪 Zum Trip</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+        overflow: hidden;
+      }
+
+      .challenge-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .back-btn {
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        color: #ffd700;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        transition: all 0.3s;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Main Button */
+      .main-btn {
+        padding: 30px 60px;
+        font-size: 2rem;
+        font-family: inherit;
+        font-weight: bold;
+        background: linear-gradient(135deg, #ffd700, #ffaa00);
+        color: #333;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+        z-index: 5;
+      }
+
+      .main-btn:hover:not(:disabled) {
+        transform: scale(1.1);
+        box-shadow: 0 15px 50px rgba(255, 215, 0, 0.7);
+      }
+
+      .main-btn:disabled {
+        background: #666;
+        color: #999;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+      }
+
+      .main-btn.success {
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        color: white;
+        box-shadow: 0 10px 40px rgba(76, 175, 80, 0.5);
+      }
+
+
+      /* Hint text */
+      .hint-text {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #aaa;
+        font-size: 1rem;
+        opacity: 0;
+        transition: opacity 0.5s;
+        z-index: 5;
+      }
+
+      .hint-text.visible {
+        opacity: 1;
+      }
+
+      /* Counter */
+      .popup-counter {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #ff6b6b;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 200;
+      }
+
+      .popup-counter.visible {
+        opacity: 1;
+      }
+
+      /* Success Modal */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .modal-content {
+        background: linear-gradient(135deg, #1a4a1a, #0d2d0d);
+        padding: 50px;
+        border-radius: 20px;
+        text-align: center;
+        border: 3px solid #00c851;
+        box-shadow: 0 0 50px rgba(0, 200, 81, 0.4);
+        animation: modalPop 0.5s ease-out;
+        color: white;
+      }
+
+      @keyframes modalPop {
+        0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+        100% { transform: scale(1) rotate(0); opacity: 1; }
+      }
+
+      .modal-content h2 {
+        font-size: 3rem;
+        color: #00c851;
+        margin-bottom: 20px;
+      }
+
+      .modal-content p {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .modal-subtitle {
+        color: #aaa;
+        font-style: italic;
+      }
+
+      .action-btn {
+        margin-top: 25px;
+        padding: 15px 40px;
+        font-size: 1.3rem;
+        font-family: inherit;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        background: linear-gradient(135deg, #00c851, #007E33);
+        color: white;
+        box-shadow: 0 5px 20px rgba(0, 200, 81, 0.4);
+      }
+
+      .action-btn:hover {
+        transform: scale(1.05);
+      }
+
+      /* Completed state */
+      .completed-msg {
+        background: rgba(0, 200, 81, 0.2);
+        padding: 30px 50px;
+        border-radius: 15px;
+        border: 2px solid #00c851;
+        text-align: center;
+        color: white;
+      }
+
+      .completed-msg h2 {
+        color: #00c851;
+        font-size: 2rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 500px) {
+        .main-btn {
+          padding: 20px 40px;
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+
+    <!-- Global styles for windows appended to body -->
+    <style is:global>
+      .popup-window {
+        position: fixed !important;
+        background: #c0c0c0;
+        border: 3px outset #dfdfdf;
+        box-shadow: 
+          inset 1px 1px 0 #fff,
+          inset -1px -1px 0 #808080,
+          3px 3px 10px rgba(0,0,0,0.5);
+        width: 300px;
+        z-index: 1000;
+        font-family: 'Tahoma', 'Segoe UI', sans-serif;
+      }
+
+      .popup-window .window-titlebar {
+        background: linear-gradient(90deg, #000080, #1084d0);
+        color: white;
+        padding: 4px 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: move;
+        user-select: none;
+      }
+
+      .popup-window .window-title {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .popup-window .window-close {
+        width: 22px;
+        height: 20px;
+        background: #c0c0c0;
+        border: 2px outset #dfdfdf;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        color: #000;
+        font-family: Arial, sans-serif;
+        padding: 0;
+        line-height: 1;
+      }
+
+      .popup-window .window-close:hover {
+        background: #ff6b6b;
+        color: white;
+      }
+
+      .popup-window .window-close:active {
+        border-style: inset;
+      }
+
+      .popup-window .window-content {
+        padding: 20px;
+        text-align: center;
+        background: #c0c0c0;
+      }
+
+      .popup-window .ad-icon {
+        font-size: 3.5rem;
+        margin-bottom: 12px;
+      }
+
+      .popup-window .ad-image {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        object-fit: contain;
+        border: 2px inset #808080;
+      }
+
+      .popup-window .ad-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #000080;
+        margin-bottom: 10px;
+      }
+
+      .popup-window .ad-text {
+        font-size: 12px;
+        color: #333;
+        margin-bottom: 18px;
+        line-height: 1.5;
+      }
+
+      .popup-window .ad-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .popup-window .ad-btn {
+        background: #c0c0c0;
+        border: 2px outset #dfdfdf;
+        padding: 6px 20px;
+        font-family: 'Tahoma', sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .popup-window .ad-btn:active {
+        border-style: inset;
+      }
+
+      .popup-window .ad-btn.primary {
+        font-weight: bold;
+      }
+
+      @media (max-width: 500px) {
+        .popup-window {
+          width: 260px;
+          max-width: 90vw;
+        }
+      }
+    </style>
+
+    <script>
+      const mainBtn = document.getElementById('main-btn') as HTMLButtonElement;
+      const successModal = document.getElementById('success-modal') as HTMLElement;
+      const continueBtn = document.getElementById('continue-btn') as HTMLButtonElement;
+      const completedMsg = document.getElementById('completed-msg') as HTMLElement;
+
+      let openWindows = 0;
+      let hasSpawnedWindows = false;
+      let highestZ = 100;
+
+      // Ad images from /public/ads/
+      const adImages = [
+        '/ads/0zX53MKCPddz3BfUYu9uY_10cf48b9a4e943d5b2fe3b41264c119a.jpg',
+        '/ads/284fd477-f7ba-4c1d-86cd-cd98e4a1f97b.JPG',
+        '/ads/3CmCe-MrE6UwhJdC-He03_0e7949c90e094f12a05e47809f31b9b8.jpg',
+        '/ads/5anuoWpORm5ua06ZJ2roG_0a07305d3535469394b2de5dda77e760.jpg',
+        '/ads/6a602f8b-b98b-411f-98a0-23e4d310d398.JPG',
+        '/ads/7221a272-425b-4ff4-8838-966cc5e1eb30.JPG',
+        '/ads/83eIPA6mbY1-0bCw7t28t_5b9e104e30f345fc8fae2eb80dfc101f.jpg',
+        '/ads/988eea83-417f-445c-98a1-9b60040dfd61.JPG',
+        '/ads/db44d742-c567-40d1-8406-f3bcdbb5fc79.JPG',
+        '/ads/dX_0B6PYmr1pM13trIGmk_fd08dc62a3f741098b35b76dc47f5dbf.jpg',
+        '/ads/f565cf77-bcaf-4d3b-970a-f44ff942a642.JPG',
+        '/ads/f82e69b1-9c9f-4833-8358-fed441db2ec6.JPG',
+        '/ads/fc83ed82-5179-4ee6-9ab6-9501500951e9.JPG',
+        '/ads/GrIN9m6lEcYqXaXEfFmCW_bf3bc56961b8445cae145257b33ffe1a.jpg',
+        '/ads/JGyd9oKOyT6bhvxYA2Ofk_de456b6876504d60bf3c1d85fb65f23a.jpg',
+        '/ads/JnXKKF3ecdjL5-zFJHlYu_8553426b6828466d92f6d42395e5ccfa.jpg',
+        '/ads/ngiEoWXDnxSE6AUgOuuGf_6cccee36f90c4258b2b22315af7901a5.jpg',
+        '/ads/WTX7o6idWYVkEy58NzzcS_8e7132c9ce0d4e7ca530513d4eb0e70e.jpg',
+      ];
+
+      // Check if already completed
+      if (localStorage.getItem('challenge3_complete') === 'true') {
+        mainBtn.style.display = 'none';
+        completedMsg.style.display = 'block';
+      }
+
+      // Close a window
+      function closeWindow(windowEl: HTMLElement) {
+        windowEl.remove();
+        openWindows--;
+        checkAllClosed();
+      }
+
+      // Create a window
+      function createWindow(imagePath: string) {
+        const win = document.createElement('div');
+        win.className = 'popup-window';
+        win.style.zIndex = String(highestZ++);
+        
+        // Random position
+        const x = Math.random() * (window.innerWidth - 320) + 10;
+        const y = Math.random() * (window.innerHeight - 350) + 10;
+        win.style.left = Math.max(10, Math.min(x, window.innerWidth - 320)) + 'px';
+        win.style.top = Math.max(10, Math.min(y, window.innerHeight - 350)) + 'px';
+
+        win.innerHTML = `
+          <div class="window-titlebar">
+            <span class="window-title"></span>
+            <button class="window-close">✕</button>
+          </div>
+          <div class="window-content">
+            <img class="ad-image" src="${imagePath}" alt="Ad" />
+          </div>
+        `;
+
+        // Close button
+        const closeBtn = win.querySelector('.window-close');
+        closeBtn?.addEventListener('click', () => closeWindow(win));
+
+        // Bring to front on click
+        win.addEventListener('mousedown', () => {
+          win.style.zIndex = String(highestZ++);
+        });
+
+        // Make draggable
+        const titlebar = win.querySelector('.window-titlebar') as HTMLElement;
+        let isDragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        titlebar.addEventListener('mousedown', (e) => {
+          if ((e.target as HTMLElement).classList.contains('window-close')) return;
+          isDragging = true;
+          offsetX = e.clientX - win.offsetLeft;
+          offsetY = e.clientY - win.offsetTop;
+          win.style.zIndex = String(highestZ++);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          win.style.left = (e.clientX - offsetX) + 'px';
+          win.style.top = (e.clientY - offsetY) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+
+        document.body.appendChild(win);
+        openWindows++;
+      }
+
+      // Check if all closed
+      function checkAllClosed() {
+        if (openWindows === 0 && hasSpawnedWindows) {
+          mainBtn.disabled = false;
+          mainBtn.classList.add('success');
+          mainBtn.textContent = '✨ Tüür öffne! ✨';
+        }
+      }
+
+      // Spawn windows
+      function spawnWindows() {
+        const numWindows = Math.floor(Math.random() * 11) + 10; // 10-20
+        const shuffledImages = [...adImages].sort(() => Math.random() - 0.5);
+        
+        for (let i = 0; i < numWindows; i++) {
+          setTimeout(() => {
+            const image = shuffledImages[i % shuffledImages.length];
+            createWindow(image);
+          }, i * 150);
+        }
+
+        hasSpawnedWindows = true;
+        mainBtn.disabled = true;
+      }
+
+      // Main button click
+      mainBtn.addEventListener('click', () => {
+        if (localStorage.getItem('challenge3_complete') === 'true') return;
+
+        if (!hasSpawnedWindows) {
+          spawnWindows();
+        } else if (openWindows === 0) {
+          localStorage.setItem('challenge3_complete', 'true');
+          successModal.style.display = 'flex';
+        }
+      });
+
+      // Continue button
+      continueBtn.addEventListener('click', () => {
+        window.location.href = '/trips/3';
+      });
+    </script>
+  </body>
+</html>

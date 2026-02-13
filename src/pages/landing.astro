@@ -6,28 +6,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="description" content="D'Geburtstagssite für Döme & Flips - 30 Jahre alt!" />
-    <title>🎁 Euer Geschänk - Döme & Flips</title>
+    <title>🎁 Eues Gschänk - Döme & Flips</title>
   </head>
   <body>
-    <!-- VOICE-OVER OVERLAY -->
-    <div id="voice-overlay" class="voice-overlay">
-      <div class="overlay-background"></div>
-      <div class="video-container">
-        <video id="overlay-video" class="overlay-video" autoplay loop muted playsinline>
-          <source src="/video/weihnachtsmah-video.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <audio id="overlay-audio" autoplay>
-        <source src="/audio/wiehnachtsmah-erklearung.mp3" type="audio/mpeg" />
-      </audio>
-      <button id="skip-voice-btn" class="skip-voice-btn">
-        Skip ⏭️
-      </button>
-    </div>
-
     <!-- LANDING PAGE CONTENT -->
     <div class="landing-page">
       <!-- Header Section -->
@@ -78,6 +63,10 @@
                   </div>
                   <div class="lock">🔒</div>
                   <div class="door-label">???</div>
+                  <div class="cooldown-overlay" data-cooldown="1" style="display: none;">
+                    <span class="cooldown-icon">⏳</span>
+                    <span class="cooldown-timer">00:00</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,6 +91,10 @@
                   </div>
                   <div class="lock">🔒</div>
                   <div class="door-label">???</div>
+                  <div class="cooldown-overlay" data-cooldown="2" style="display: none;">
+                    <span class="cooldown-icon">⏳</span>
+                    <span class="cooldown-timer">00:00</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -126,6 +119,10 @@
                   </div>
                   <div class="lock">🔒</div>
                   <div class="door-label">???</div>
+                  <div class="cooldown-overlay" data-cooldown="3" style="display: none;">
+                    <span class="cooldown-icon">⏳</span>
+                    <span class="cooldown-timer">00:00</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,6 +147,10 @@
                   </div>
                   <div class="lock">🔒</div>
                   <div class="door-label">???</div>
+                  <div class="cooldown-overlay" data-cooldown="4" style="display: none;">
+                    <span class="cooldown-icon">⏳</span>
+                    <span class="cooldown-timer">00:00</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -174,6 +175,10 @@
                   </div>
                   <div class="lock">🔒</div>
                   <div class="door-label">???</div>
+                  <div class="cooldown-overlay" data-cooldown="5" style="display: none;">
+                    <span class="cooldown-icon">⏳</span>
+                    <span class="cooldown-timer">00:00</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -182,8 +187,18 @@
         </div>
       </section>
 
-      <!-- Hint text -->
-      <p class="hint-text">🔑 Öffnet d'Tüüre, sind eu aber de Gfahr bewusst!</p>
+
+      <!-- Reset button (hidden in corner) -->
+      <button id="reset-btn" class="reset-btn" title="Reset all progress">🔄</button>
+
+      <!-- Marshall Mathers Easter Egg -->
+      <img 
+        id="marshall-fly" 
+        class="marshall-fly" 
+        src="/marshall-mathers.png" 
+        alt="?" 
+        style="display: none;"
+      />
     </div>
   </body>
 </html>
@@ -200,78 +215,6 @@
     min-height: 100vh;
     overflow-x: hidden;
     font-family: 'Impact', 'Arial Black', sans-serif;
-  }
-
-  /* ============================================
-     VOICE-OVER OVERLAY
-     ============================================ */
-  .voice-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s ease-out;
-  }
-
-  .voice-overlay.fade-out {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .overlay-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-  }
-
-  .video-container {
-    position: relative;
-    z-index: 1;
-    max-width: 80%;
-    max-height: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .overlay-video {
-    max-width: 100%;
-    max-height: 70vh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: 10px;
-    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-  }
-
-  .skip-voice-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: all 0.3s;
-    z-index: 1001;
-    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
-  }
-
-  .skip-voice-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: white;
-    transform: scale(1.05);
   }
 
   /* ============================================
@@ -516,6 +459,123 @@
     75% { transform: translateX(-50%) rotate(10deg); }
   }
 
+  /* Unlocked door state */
+  .door.unlocked .door-surface {
+    background: linear-gradient(
+      180deg,
+      #2d5a2d 0%,
+      #3d7a3d 20%,
+      #2d5a2d 40%,
+      #1d4a1d 60%,
+      #2d5a2d 80%,
+      #3d7a3d 100%
+    );
+    box-shadow: 
+      inset 0 0 30px rgba(0,255,0,0.2),
+      0 0 20px rgba(0,255,0,0.3);
+  }
+
+  .door.unlocked .door-frame {
+    border-color: #4a7a4a;
+    box-shadow: 
+      inset 0 0 20px rgba(0,255,0,0.2),
+      0 10px 30px rgba(0,255,0,0.3),
+      0 0 0 4px #2a5a2a;
+  }
+
+  .door.unlocked .chains {
+    opacity: 0.3;
+    filter: grayscale(100%);
+  }
+
+  .door.unlocked:hover {
+    transform: scale(1.08);
+  }
+
+  /* Trip image background for unlocked doors */
+  .door.unlocked .door-surface {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  .door.unlocked .door-panels {
+    display: none;
+  }
+
+  .door.unlocked .door-label {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    bottom: 10px;
+  }
+
+  /* Cooldown overlay on doors */
+  .cooldown-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px 4px 0 0;
+    z-index: 10;
+  }
+
+  .cooldown-icon {
+    font-size: 2.5rem;
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  .cooldown-timer {
+    font-size: 1.5rem;
+    font-family: 'Courier New', monospace;
+    color: #ff6b6b;
+    margin-top: 10px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+  }
+
+  .door.on-cooldown {
+    cursor: not-allowed;
+  }
+
+  .door.on-cooldown:hover {
+    transform: none;
+  }
+
+  .door.on-cooldown .lock {
+    animation: none;
+  }
+
+  /* Reset button */
+  .reset-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0.3;
+  }
+
+  .reset-btn:hover {
+    opacity: 1;
+    background: rgba(255, 0, 0, 0.3);
+    color: white;
+    transform: rotate(180deg);
+  }
+
   /* Door label */
   .door-label {
     position: absolute;
@@ -570,10 +630,6 @@
     .door-label {
       font-size: 1.2rem;
     }
-
-    .video-container {
-      max-width: 95%;
-    }
   }
 
   @media (max-width: 400px) {
@@ -590,65 +646,233 @@
       gap: 6px;
     }
   }
+
+  /* Marshall Mathers Easter Egg - Flying Image */
+  .marshall-fly {
+    position: fixed;
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+    z-index: 1000;
+    pointer-events: auto;
+    transition: transform 0.1s ease-out;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+  }
+
+  .marshall-fly:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+  }
 </style>
 
 <script>
-  // Elements
-  const voiceOverlay = document.getElementById('voice-overlay') as HTMLElement;
-  const overlayVideo = document.getElementById('overlay-video') as HTMLVideoElement;
-  const overlayAudio = document.getElementById('overlay-audio') as HTMLAudioElement;
-  const skipVoiceBtn = document.getElementById('skip-voice-btn') as HTMLButtonElement;
+  const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
 
-  // Start video and audio on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    // Ensure video plays
-    overlayVideo.play().catch(console.error);
+  // Trip data configuration
+  const TRIPS: Record<number, { city: string; image: string }> = {
+    1: { city: 'Prag', image: '/images/trips/prag.jpg' },
+    2: { city: 'Edinburgh', image: '/images/trips/edinburgh.jpg' },
+    3: { city: 'Bordeaux', image: '/images/trips/bordeaux.jpg' },
+    4: { city: 'Oslo', image: '/images/trips/oslo.jpg' },
+    5: { city: 'Bilbao', image: '/images/trips/bilbao.jpg' }
+  };
+
+  // Check for unlocked doors on page load
+  function checkUnlockedDoors() {
+    let anyDoorUnlocked = false;
     
-    // Audio might need user interaction in some browsers
-    overlayAudio.play().catch((err) => {
-      console.log('Audio autoplay blocked, waiting for user interaction');
-      // If autoplay is blocked, try to play on any click
-      document.addEventListener('click', () => {
-        overlayAudio.play().catch(console.error);
-      }, { once: true });
-    });
-  });
-
-  // When audio ends, hide overlay
-  overlayAudio.addEventListener('ended', () => {
-    hideOverlay();
-  });
-
-  // Skip button
-  skipVoiceBtn.addEventListener('click', () => {
-    hideOverlay();
-  });
-
-  function hideOverlay() {
-    // Stop audio and video
-    overlayAudio.pause();
-    overlayVideo.pause();
+    for (let i = 1; i <= 5; i++) {
+      const isUnlocked = localStorage.getItem(`challenge${i}_complete`) === 'true';
+      const door = document.querySelector(`.door[data-door="${i}"]`);
+      const doorWrapper = door?.closest('.door-wrapper');
+      const doorNumber = doorWrapper?.querySelector('.door-number');
+      
+      if (isUnlocked && door) {
+        anyDoorUnlocked = true;
+        door.classList.add('unlocked');
+        const lock = door.querySelector('.lock');
+        const chains = door.querySelector('.chains');
+        const label = door.querySelector('.door-label');
+        const doorSurface = door.querySelector('.door-surface') as HTMLElement;
+        const cooldownOverlay = door.querySelector('.cooldown-overlay') as HTMLElement;
+        
+        // Get trip data
+        const trip = TRIPS[i];
+        
+        if (lock) lock.textContent = '🔓';
+        if (chains) (chains as HTMLElement).style.opacity = '0.3';
+        if (label) label.textContent = trip.city;
+        if (doorNumber) doorNumber.textContent = trip.city;
+        if (cooldownOverlay) cooldownOverlay.style.display = 'none';
+        
+        // Set trip image as background
+        if (doorSurface && trip.image) {
+          doorSurface.style.background = `url('${trip.image}')`;
+          doorSurface.style.backgroundSize = 'cover';
+          doorSurface.style.backgroundPosition = 'center';
+        }
+      }
+    }
     
-    // Fade out overlay
-    voiceOverlay.classList.add('fade-out');
-    
-    // Remove from DOM after animation
-    setTimeout(() => {
-      voiceOverlay.style.display = 'none';
-    }, 1000);
+    // If any door is unlocked, show the Marshall Mathers easter egg
+    if (anyDoorUnlocked) {
+      startMarshallFly();
+    }
   }
+
+  // Marshall Mathers Flying Easter Egg
+  const marshallFly = document.getElementById('marshall-fly') as HTMLImageElement;
+  let marshallX = Math.random() * (window.innerWidth - 100);
+  let marshallY = Math.random() * (window.innerHeight - 100);
+  let marshallVX = (Math.random() - 0.5) * 4;
+  let marshallVY = (Math.random() - 0.5) * 4;
+  let flyInterval: number | null = null;
+
+  function startMarshallFly() {
+    if (!marshallFly) return;
+    
+    // Show the image
+    marshallFly.style.display = 'block';
+    marshallFly.style.left = marshallX + 'px';
+    marshallFly.style.top = marshallY + 'px';
+    
+    // Click handler - navigate to marshall-mathers page
+    marshallFly.addEventListener('click', () => {
+      window.location.href = '/marshall-mathers';
+    });
+    
+    // Animate like a fly
+    flyInterval = window.setInterval(() => {
+      // Randomly change direction occasionally (like a fly)
+      if (Math.random() < 0.05) {
+        marshallVX = (Math.random() - 0.5) * 6;
+        marshallVY = (Math.random() - 0.5) * 6;
+      }
+      
+      // Update position
+      marshallX += marshallVX;
+      marshallY += marshallVY;
+      
+      // Bounce off edges
+      if (marshallX < 0) {
+        marshallX = 0;
+        marshallVX = Math.abs(marshallVX);
+      }
+      if (marshallX > window.innerWidth - 80) {
+        marshallX = window.innerWidth - 80;
+        marshallVX = -Math.abs(marshallVX);
+      }
+      if (marshallY < 0) {
+        marshallY = 0;
+        marshallVY = Math.abs(marshallVY);
+      }
+      if (marshallY > window.innerHeight - 80) {
+        marshallY = window.innerHeight - 80;
+        marshallVY = -Math.abs(marshallVY);
+      }
+      
+      // Apply position
+      marshallFly.style.left = marshallX + 'px';
+      marshallFly.style.top = marshallY + 'px';
+    }, 30);
+  }
+
+  // Check for cooldowns on doors
+  function checkDoorCooldowns() {
+    for (let i = 1; i <= 5; i++) {
+      const door = document.querySelector(`.door[data-door="${i}"]`);
+      const cooldownOverlay = document.querySelector(`.cooldown-overlay[data-cooldown="${i}"]`) as HTMLElement;
+      const timerEl = cooldownOverlay?.querySelector('.cooldown-timer');
+      
+      if (!door || !cooldownOverlay || !timerEl) continue;
+      
+      // Check for cooldown - Challenge 5 uses cooldown_until, others use lastFail
+      let remaining = 0;
+      
+      if (i === 2) {
+        // Challenge 2 (coin flip): uses cooldown_until timestamp
+        const cooldownUntil = localStorage.getItem('challenge2_cooldown_until');
+        if (cooldownUntil) {
+          remaining = parseInt(cooldownUntil) - Date.now();
+        }
+      } else {
+        // Other challenges: use lastFail timestamp
+        const lastFail = localStorage.getItem(`challenge${i}_lastFail`);
+        if (lastFail) {
+          remaining = COOLDOWN_MS - (Date.now() - parseInt(lastFail));
+        }
+      }
+      
+      if (remaining > 0) {
+        // Show cooldown
+        door.classList.add('on-cooldown');
+        cooldownOverlay.style.display = 'flex';
+        
+        // Update timer
+        const updateTimer = () => {
+          let currentRemaining = 0;
+          
+          if (i === 2) {
+            const cooldownUntil = localStorage.getItem('challenge2_cooldown_until');
+            if (cooldownUntil) {
+              currentRemaining = parseInt(cooldownUntil) - Date.now();
+            }
+          } else {
+            const lastFail = localStorage.getItem(`challenge${i}_lastFail`);
+            if (lastFail) {
+              currentRemaining = COOLDOWN_MS - (Date.now() - parseInt(lastFail));
+            }
+          }
+          
+          if (currentRemaining <= 0) {
+            door.classList.remove('on-cooldown');
+            cooldownOverlay.style.display = 'none';
+            return;
+          }
+          
+          const minutes = Math.floor(currentRemaining / 60000);
+          const seconds = Math.floor((currentRemaining % 60000) / 1000);
+          timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          requestAnimationFrame(() => setTimeout(updateTimer, 1000));
+        };
+        updateTimer();
+      }
+    }
+  }
+
+  // Run on load
+  checkUnlockedDoors();
+  checkDoorCooldowns();
 
   // Door click handlers
   document.querySelectorAll('.door').forEach((door) => {
     door.addEventListener('click', () => {
       const doorNumber = door.getAttribute('data-door');
-      alert(`🔒 Option ${doorNumber} isch no gschlosse!\n\nDu muesch zerst e Challenge bestah...`);
+      const isUnlocked = localStorage.getItem(`challenge${doorNumber}_complete`) === 'true';
+      
+      if (isUnlocked) {
+        // Door is unlocked - go to trip page
+        window.location.href = `/trips/${doorNumber}`;
+      } else {
+        // Door is locked - go to challenge
+        window.location.href = `/challenges/${doorNumber}`;
+      }
     });
   });
 
-  // Disable right-click
-  document.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    alert('🚫 NICE TRY!\n\nDu chasch nöd eifach d\'Source Code klaue! 😏');
+  // Reset button
+  const resetBtn = document.getElementById('reset-btn');
+  resetBtn?.addEventListener('click', () => {
+    if (confirm('🔄 Willst du wirklich ALLE Challenges zurücksetzen?\n\nAlle Türen werden wieder geschlossen!')) {
+      // Clear all challenge-related localStorage
+      for (let i = 1; i <= 5; i++) {
+        localStorage.removeItem(`challenge${i}_complete`);
+        localStorage.removeItem(`challenge${i}_lastFail`);
+      }
+      // Clear Challenge 2 specific keys (coin flip)
+      localStorage.removeItem('challenge2_cooldown_until');
+      // Reload the page
+      window.location.reload();
+    }
   });
 </script>

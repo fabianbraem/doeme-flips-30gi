@@ -108,7 +108,7 @@
   transform: translate(-50%, -50%);
   color: #4bd5ee;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: clamp(1rem, 3vw, 1.8rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   text-align: center;
   opacity: 0;
   z-index: 5;
@@ -207,9 +207,19 @@
 .crawl-title {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #feda4a;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.crawl-subtitle {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #feda4a;
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: bold;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -217,7 +227,7 @@
 .crawl-text {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #feda4a;
-  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
   line-height: 1.6;
   text-align: justify;
 }

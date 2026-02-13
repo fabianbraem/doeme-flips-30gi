@@ -1,0 +1,176 @@
+---
+// Marshall Mathers Easter Egg Page
+---
+
+<html lang="de-CH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>🎤 ???</title>
+  </head>
+  <body>
+    <div class="marshall-page">
+      
+      <!-- Video Player -->
+      <video 
+        id="marshall-video"
+        class="marshall-video" 
+        src="/not_like_it_used_to_be.mp4" 
+        autoplay
+        playsinline
+      ></video>
+
+      <!-- Button Container -->
+      <div class="button-container">
+        <button id="replay-btn" class="action-btn replay-btn">
+          🔄
+        </button>
+        <button id="back-btn" class="action-btn back-btn">
+          Hani nöd lustig gfunde
+        </button>
+      </div>
+
+    </div>
+  </body>
+</html>
+
+<style>
+  /* Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* Marshall Page */
+  .marshall-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Video */
+  .marshall-video {
+    max-width: 90vw;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 10px 50px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Button Container */
+  .button-container {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 600;
+  }
+
+  /* Action Buttons */
+  .action-btn {
+    padding: 20px 40px;
+    font-size: 1.3rem;
+    font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 1px;
+  }
+
+  /* Back Button */
+  .back-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    box-shadow: 0 8px 30px rgba(238, 90, 36, 0.5);
+  }
+
+  .back-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(238, 90, 36, 0.7);
+  }
+
+  /* Replay Button */
+  .replay-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+    padding: 15px 20px;
+    font-size: 1.8rem;
+    min-width: auto;
+  }
+
+  .replay-btn:hover {
+    transform: scale(1.2);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.7);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .button-container {
+      flex-direction: column;
+      gap: 15px;
+      bottom: 30px;
+    }
+
+    .action-btn {
+      padding: 15px 30px;
+      font-size: 1rem;
+    }
+
+    .marshall-video {
+      max-width: 95vw;
+      max-height: 60vh;
+    }
+  }
+</style>
+
+<script>
+  const marshallVideo = document.getElementById('marshall-video') as HTMLVideoElement;
+  const replayBtn = document.getElementById('replay-btn') as HTMLButtonElement;
+  const backBtn = document.getElementById('back-btn') as HTMLButtonElement;
+
+  // Start video on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    if (marshallVideo) {
+      marshallVideo.play().catch(err => console.log('Video autoplay blocked:', err));
+    }
+  });
+
+  // Replay button - restart video from beginning
+  replayBtn?.addEventListener('click', () => {
+    if (marshallVideo) {
+      marshallVideo.currentTime = 0;
+      marshallVideo.play().catch(err => console.log('Video play failed:', err));
+    }
+  });
+
+  // Back button - go to landing page
+  backBtn?.addEventListener('click', () => {
+    if (marshallVideo) {
+      marshallVideo.pause();
+    }
+    window.location.href = '/landing';
+  });
+</script>

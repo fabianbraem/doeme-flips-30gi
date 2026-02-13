@@ -1,0 +1,576 @@
+---
+// Challenge 1: Who Is It - DÖME or FLIPS?
+// User must correctly identify 5 images in a row to win
+---
+
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>🤔 Challenge 1: Wer isch das?</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: 'Comic Sans MS', 'Comic Neue', cursive;
+      }
+
+      .challenge-page {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        padding: 20px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .back-btn {
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        color: #ffd700;
+        text-decoration: none;
+        font-size: 1rem;
+        padding: 10px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        transition: all 0.3s;
+        cursor: pointer;
+        z-index: 100;
+      }
+
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .challenge-header {
+        text-align: center;
+        margin-top: 40px;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #ff6b6b;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+
+      .instructions {
+        color: #aaa;
+        font-size: 1rem;
+        max-width: 400px;
+        line-height: 1.5;
+      }
+
+      /* Progress indicator */
+      .progress {
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      .progress-text {
+        font-size: 1.5rem;
+        color: #ffd700;
+        margin-bottom: 10px;
+      }
+
+      .progress-dots {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .dot {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s;
+      }
+
+      .dot.filled {
+        background: #4CAF50;
+        border-color: #4CAF50;
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+      }
+
+      /* Image display */
+      .image-container {
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .game-image {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        transition: all 0.3s;
+      }
+
+      .game-image.correct {
+        animation: correctFlash 0.5s ease-out;
+        box-shadow: 0 0 40px rgba(76, 175, 80, 0.8);
+      }
+
+      .game-image.wrong {
+        animation: wrongShake 0.5s ease-out;
+        box-shadow: 0 0 40px rgba(244, 67, 54, 0.8);
+      }
+
+      @keyframes correctFlash {
+        0%, 100% { border: 5px solid transparent; }
+        50% { border: 5px solid #4CAF50; }
+      }
+
+      @keyframes wrongShake {
+        0%, 100% { transform: translateX(0); border: 5px solid #f44336; }
+        20% { transform: translateX(-15px); }
+        40% { transform: translateX(15px); }
+        60% { transform: translateX(-10px); }
+        80% { transform: translateX(10px); }
+      }
+
+      /* Answer buttons */
+      .buttons-container {
+        display: flex;
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .answer-btn {
+        padding: 20px 50px;
+        font-size: 1.5rem;
+        font-family: inherit;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .answer-btn:hover:not(:disabled) {
+        transform: scale(1.05);
+      }
+
+      .answer-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .dome-btn {
+        background: linear-gradient(135deg, #e91e63, #c2185b);
+        color: white;
+      }
+
+      .dome-btn:hover:not(:disabled) {
+        box-shadow: 0 12px 40px rgba(233, 30, 99, 0.5);
+      }
+
+      .flips-btn {
+        background: linear-gradient(135deg, #2196F3, #1565C0);
+        color: white;
+      }
+
+      .flips-btn:hover:not(:disabled) {
+        box-shadow: 0 12px 40px rgba(33, 150, 243, 0.5);
+      }
+
+      /* Feedback message */
+      .feedback {
+        font-size: 1.5rem;
+        min-height: 50px;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .feedback.correct {
+        color: #4CAF50;
+      }
+
+      .feedback.wrong {
+        color: #f44336;
+      }
+
+      /* Success Modal */
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+
+      .modal-content {
+        background: linear-gradient(135deg, #1a4a1a, #0d2d0d);
+        padding: 50px;
+        border-radius: 20px;
+        text-align: center;
+        border: 3px solid #4CAF50;
+        box-shadow: 0 0 50px rgba(76, 175, 80, 0.4);
+        animation: modalPop 0.5s ease-out;
+      }
+
+      @keyframes modalPop {
+        0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+        100% { transform: scale(1) rotate(0); opacity: 1; }
+      }
+
+      .modal-content h2 {
+        font-size: 2.5rem;
+        color: #4CAF50;
+        margin-bottom: 20px;
+      }
+
+      .modal-content p {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .action-btn {
+        margin-top: 25px;
+        padding: 15px 40px;
+        font-size: 1.3rem;
+        font-family: inherit;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        color: white;
+        box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4);
+      }
+
+      .action-btn:hover {
+        transform: scale(1.05);
+      }
+
+      .play-on-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 25px;
+      }
+
+      .modal-buttons .action-btn {
+        margin-top: 0;
+      }
+
+      /* Completed state */
+      .completed-msg {
+        margin-top: 50px;
+        background: rgba(76, 175, 80, 0.2);
+        padding: 30px 50px;
+        border-radius: 15px;
+        border: 2px solid #4CAF50;
+        text-align: center;
+      }
+
+      .completed-msg h2 {
+        color: #4CAF50;
+        font-size: 2rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        .game-image {
+          width: 320px;
+          height: 320px;
+        }
+      }
+
+      @media (max-width: 500px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .game-image {
+          width: 280px;
+          height: 280px;
+        }
+
+        .buttons-container {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .answer-btn {
+          padding: 15px 40px;
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .game-image {
+          width: 240px;
+          height: 240px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="challenge-page">
+      <a href="/landing" class="back-btn">← Zurück</a>
+      
+      <header class="challenge-header">
+        <h1>🤔 Challenge 1</h1>
+        <h2>Wer isch das?</h2>
+        <p class="instructions">Erkenn wer uf em Bild isch! 5 richtig in Folg.</p>
+      </header>
+
+      <div class="progress">
+        <div class="progress-text"><span id="streak">0</span> / 5</div>
+        <div class="progress-dots">
+          <div class="dot" data-dot="0"></div>
+          <div class="dot" data-dot="1"></div>
+          <div class="dot" data-dot="2"></div>
+          <div class="dot" data-dot="3"></div>
+          <div class="dot" data-dot="4"></div>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <img id="game-image" class="game-image" src="" alt="Wer isch das?" />
+      </div>
+
+      <div class="buttons-container">
+        <button class="answer-btn dome-btn" id="dome-btn">DÖME</button>
+        <button class="answer-btn flips-btn" id="flips-btn">FLIPS</button>
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <!-- Already completed message -->
+      <div id="completed-msg" class="completed-msg" style="display: none;">
+        <h2>✅ Bereits geschafft!</h2>
+        <p>Du hast diese Challenge schon bestanden.</p>
+        <button id="play-on-btn" class="action-btn play-on-btn">🔄 Will wiiter spiele:((</button>
+      </div>
+
+      <!-- Success Modal -->
+      <div id="success-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <h2>🎉 DAAMN!</h2>
+          <p>Was 1 Auge!</p>
+          <p style="color: #aaa; font-style: italic;">skrrskrrr!</p>
+          <div class="modal-buttons">
+            <button id="continue-btn" class="action-btn">🚪 Zum Trip</button>
+            <button id="play-on-modal-btn" class="action-btn play-on-btn">🔄 Will wiiter spiele:((</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // All images with their answers
+      const IMAGES = [
+        // DÖME images
+        { path: '/who/d1.jpg', answer: 'dome' },
+        { path: '/who/d2.jpg', answer: 'dome' },
+        { path: '/who/d3.jpg', answer: 'dome' },
+        { path: '/who/d4.jpg', answer: 'dome' },
+        { path: '/who/d5.jpg', answer: 'dome' },
+        { path: '/who/d6.jpg', answer: 'dome' },
+        { path: '/who/d7.jpg', answer: 'dome' },
+        { path: '/who/d8.jpg', answer: 'dome' },
+        // FLIPS images
+        { path: '/who/p1.jpg', answer: 'flips' },
+        { path: '/who/p2.jpg', answer: 'flips' },
+        { path: '/who/p3.jpg', answer: 'flips' },
+        { path: '/who/p4.jpg', answer: 'flips' },
+        { path: '/who/p5.jpg', answer: 'flips' },
+        { path: '/who/p6.jpg', answer: 'flips' },
+        { path: '/who/p7.jpg', answer: 'flips' },
+        { path: '/who/p8.jpg', answer: 'flips' },
+        { path: '/who/p9.jpg', answer: 'flips' },
+      ];
+
+      const REQUIRED_STREAK = 5;
+
+      const gameImage = document.getElementById('game-image') as HTMLImageElement;
+      const domeBtn = document.getElementById('dome-btn') as HTMLButtonElement;
+      const flipsBtn = document.getElementById('flips-btn') as HTMLButtonElement;
+      const streakEl = document.getElementById('streak') as HTMLElement;
+      const feedbackEl = document.getElementById('feedback') as HTMLElement;
+      const successModal = document.getElementById('success-modal') as HTMLElement;
+      const continueBtn = document.getElementById('continue-btn') as HTMLButtonElement;
+      const completedMsg = document.getElementById('completed-msg') as HTMLElement;
+      const playOnBtn = document.getElementById('play-on-btn') as HTMLButtonElement;
+      const playOnModalBtn = document.getElementById('play-on-modal-btn') as HTMLButtonElement;
+
+      let currentStreak = 0;
+      let currentImageIndex = -1;
+      let isProcessing = false;
+
+      // Check if already completed
+      if (localStorage.getItem('challenge1_complete') === 'true') {
+        document.querySelector('.image-container')?.setAttribute('style', 'display: none');
+        document.querySelector('.buttons-container')?.setAttribute('style', 'display: none');
+        document.querySelector('.progress')?.setAttribute('style', 'display: none');
+        completedMsg.style.display = 'block';
+      } else {
+        loadNextImage();
+      }
+
+      function updateDots() {
+        for (let i = 0; i < REQUIRED_STREAK; i++) {
+          const dot = document.querySelector(`.dot[data-dot="${i}"]`);
+          if (dot) {
+            if (i < currentStreak) {
+              dot.classList.add('filled');
+            } else {
+              dot.classList.remove('filled');
+            }
+          }
+        }
+        streakEl.textContent = String(currentStreak);
+      }
+
+      function getRandomImageIndex() {
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * IMAGES.length);
+        } while (newIndex === currentImageIndex && IMAGES.length > 1);
+        return newIndex;
+      }
+
+      function loadNextImage() {
+        currentImageIndex = getRandomImageIndex();
+        const image = IMAGES[currentImageIndex];
+        gameImage.src = image.path;
+        
+        // Reset visual states
+        gameImage.classList.remove('correct', 'wrong');
+        feedbackEl.textContent = '';
+        feedbackEl.className = 'feedback';
+        domeBtn.disabled = false;
+        flipsBtn.disabled = false;
+      }
+
+      function handleAnswer(answer: 'dome' | 'flips') {
+        if (isProcessing) return;
+        if (localStorage.getItem('challenge1_complete') === 'true') return;
+
+        isProcessing = true;
+        domeBtn.disabled = true;
+        flipsBtn.disabled = true;
+
+        const correctAnswer = IMAGES[currentImageIndex].answer;
+        const isCorrect = answer === correctAnswer;
+
+        if (isCorrect) {
+          // Correct!
+          currentStreak++;
+          gameImage.classList.add('correct');
+          feedbackEl.textContent = '✅ Richtig!';
+          feedbackEl.className = 'feedback correct';
+          updateDots();
+
+          if (currentStreak >= REQUIRED_STREAK) {
+            // WIN!
+            setTimeout(() => {
+              localStorage.setItem('challenge1_complete', 'true');
+              successModal.style.display = 'flex';
+            }, 800);
+          } else {
+            // Load next image
+            setTimeout(() => {
+              isProcessing = false;
+              loadNextImage();
+            }, 1000);
+          }
+        } else {
+          // Wrong!
+          currentStreak = 0;
+          gameImage.classList.add('wrong');
+          const correctName = correctAnswer === 'dome' ? 'DÖME' : 'FLIPS';
+          feedbackEl.textContent = `❌ Falsch! Das isch ${correctName}!`;
+          feedbackEl.className = 'feedback wrong';
+          updateDots();
+
+          // Load next image
+          setTimeout(() => {
+            isProcessing = false;
+            loadNextImage();
+          }, 1500);
+        }
+      }
+
+      // Button click handlers
+      domeBtn.addEventListener('click', () => handleAnswer('dome'));
+      flipsBtn.addEventListener('click', () => handleAnswer('flips'));
+
+      // Continue button
+      continueBtn.addEventListener('click', () => {
+        window.location.href = '/trips/1';
+      });
+
+      // Play on function - fully reset the challenge
+      function playOn() {
+        // Remove completion from localStorage (door will be locked again)
+        localStorage.removeItem('challenge1_complete');
+        
+        // Reset streak
+        currentStreak = 0;
+        updateDots();
+        
+        // Hide completed message and modal
+        completedMsg.style.display = 'none';
+        successModal.style.display = 'none';
+        
+        // Show game elements
+        document.querySelector('.image-container')?.setAttribute('style', '');
+        document.querySelector('.buttons-container')?.setAttribute('style', '');
+        document.querySelector('.progress')?.setAttribute('style', '');
+        
+        // Reset visual states
+        gameImage.classList.remove('correct', 'wrong');
+        feedbackEl.textContent = '';
+        feedbackEl.className = 'feedback';
+        domeBtn.disabled = false;
+        flipsBtn.disabled = false;
+        
+        // Reset processing state
+        isProcessing = false;
+        
+        // Load next image
+        loadNextImage();
+      }
+
+      // Play on buttons
+      playOnBtn?.addEventListener('click', playOn);
+      playOnModalBtn?.addEventListener('click', playOn);
+    </script>
+  </body>
+</html>
