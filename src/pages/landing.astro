@@ -199,6 +199,14 @@
         alt="?" 
         style="display: none;"
       />
+
+      <!-- All Doors Open Celebration -->
+      <div id="celebration-container" style="display: none;">
+        <div class="celebration-message">
+          <h2>🎉 Jetzt sind ihr gfröögt! 🎉</h2>
+          <p>Was hender Bock?</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
@@ -647,6 +655,14 @@
     }
   }
 
+  /* Mobile font adjustment - less cursive */
+  @media (max-width: 600px) {
+    .subtitle-reveal,
+    .door-number {
+      font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+    }
+  }
+
   /* Marshall Mathers Easter Egg - Flying Image */
   .marshall-fly {
     position: fixed;
@@ -662,6 +678,108 @@
   .marshall-fly:hover {
     transform: scale(1.2);
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+  }
+
+  /* Celebration container */
+  #celebration-container {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    pointer-events: none;
+  }
+
+  .celebration-message {
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 25px 40px;
+    border-radius: 20px;
+    margin: 0 auto;
+    max-width: 90%;
+    width: fit-content;
+    animation: celebrationPop 0.5s ease-out, celebrationGlow 2s ease-in-out infinite;
+  }
+
+  .celebration-message h2 {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: #ffd700;
+    text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.5);
+    margin-bottom: 10px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+
+  .celebration-message p {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    color: white;
+    font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+  }
+
+  @keyframes celebrationPop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes celebrationGlow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), 0 0 40px rgba(255, 0, 255, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
+    }
+  }
+</style>
+
+<!-- Global styles for fireworks -->
+<style is:global>
+  .firework {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 950;
+    animation: fireworkBurst 1.5s ease-out forwards;
+  }
+
+  @keyframes fireworkBurst {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--tx), var(--ty)) scale(0);
+      opacity: 0;
+    }
+  }
+
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 950;
+    animation: confettiFall var(--duration) ease-out forwards;
+  }
+
+  @keyframes confettiFall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(var(--rot));
+      opacity: 0;
+    }
   }
 </style>
 
@@ -680,12 +798,17 @@
   // Check for unlocked doors on page load
   function checkUnlockedDoors() {
     let anyDoorUnlocked = false;
+    let allDoorsUnlocked = true;
     
     for (let i = 1; i <= 5; i++) {
       const isUnlocked = localStorage.getItem(`challenge${i}_complete`) === 'true';
       const door = document.querySelector(`.door[data-door="${i}"]`);
       const doorWrapper = door?.closest('.door-wrapper');
       const doorNumber = doorWrapper?.querySelector('.door-number');
+      
+      if (!isUnlocked) {
+        allDoorsUnlocked = false;
+      }
       
       if (isUnlocked && door) {
         anyDoorUnlocked = true;
@@ -718,6 +841,85 @@
     if (anyDoorUnlocked) {
       startMarshallFly();
     }
+    
+    // If ALL doors are unlocked, start the celebration!
+    if (allDoorsUnlocked) {
+      startCelebration();
+    }
+  }
+
+  // Celebration when all doors are open
+  const celebrationColors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#4b0082', '#9400d3', '#ff00ff', '#00ffff', '#ffd700'];
+  let celebrationInterval: number | null = null;
+
+  function createFirework(x: number, y: number) {
+    const particles = 20;
+    for (let i = 0; i < particles; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'firework';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.backgroundColor = celebrationColors[Math.floor(Math.random() * celebrationColors.length)];
+      
+      const angle = (Math.PI * 2 / particles) * i;
+      const velocity = 50 + Math.random() * 100;
+      const tx = Math.cos(angle) * velocity;
+      const ty = Math.sin(angle) * velocity;
+      
+      particle.style.setProperty('--tx', tx + 'px');
+      particle.style.setProperty('--ty', ty + 'px');
+      
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 1500);
+    }
+  }
+
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.top = -20 + 'px';
+    confetti.style.backgroundColor = celebrationColors[Math.floor(Math.random() * celebrationColors.length)];
+    confetti.style.width = (5 + Math.random() * 10) + 'px';
+    confetti.style.height = (5 + Math.random() * 10) + 'px';
+    confetti.style.setProperty('--duration', (2 + Math.random() * 3) + 's');
+    confetti.style.setProperty('--rot', (Math.random() * 720) + 'deg');
+    
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 5000);
+  }
+
+  function startCelebration() {
+    const celebrationContainer = document.getElementById('celebration-container');
+    if (celebrationContainer) {
+      celebrationContainer.style.display = 'block';
+    }
+
+    // Initial fireworks burst
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => {
+        createFirework(
+          100 + Math.random() * (window.innerWidth - 200),
+          100 + Math.random() * (window.innerHeight - 300)
+        );
+      }, i * 300);
+    }
+
+    // Continuous confetti and occasional fireworks
+    celebrationInterval = window.setInterval(() => {
+      // Confetti
+      for (let i = 0; i < 3; i++) {
+        createConfetti();
+      }
+      
+      // Random firework
+      if (Math.random() < 0.3) {
+        createFirework(
+          100 + Math.random() * (window.innerWidth - 200),
+          100 + Math.random() * (window.innerHeight - 300)
+        );
+      }
+    }, 200);
   }
 
   // Marshall Mathers Flying Easter Egg
